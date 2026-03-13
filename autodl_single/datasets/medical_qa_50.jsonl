@@ -1,0 +1,50 @@
+{"id":"factoid-001","category":"factoid","question":"成年人正常体温范围大概是多少？","reference_answer":"成年人的口腔体温通常约为 36.3 到 37.2 摄氏度，不同测量部位会有差异。","source":"general_clinical_guidance"}
+{"id":"factoid-002","category":"factoid","question":"高血压一般指血压达到什么水平？","reference_answer":"门诊多次测量收缩压至少 140 mmHg 或舒张压至少 90 mmHg 时通常考虑高血压。","source":"general_clinical_guidance"}
+{"id":"factoid-003","category":"factoid","question":"空腹血糖多少算糖尿病的诊断线索？","reference_answer":"空腹血糖达到或超过 7.0 mmol/L 时通常提示糖尿病，需要结合复查和临床判断。","source":"general_clinical_guidance"}
+{"id":"factoid-004","category":"factoid","question":"成人静息心率大致正常范围是多少？","reference_answer":"多数成人静息心率约为每分钟 60 到 100 次。","source":"general_clinical_guidance"}
+{"id":"factoid-005","category":"factoid","question":"流感和普通感冒是不是同一回事？","reference_answer":"不是。流感通常起病更急、全身症状更重，而普通感冒多以上呼吸道局部症状为主。","source":"general_clinical_guidance"}
+{"id":"factoid-006","category":"factoid","question":"长期吸烟会增加哪些常见疾病风险？","reference_answer":"长期吸烟会增加慢阻肺、肺癌、心脑血管疾病等多种疾病风险。","source":"general_clinical_guidance"}
+{"id":"factoid-007","category":"factoid","question":"体重指数 BMI 怎么计算？","reference_answer":"BMI 等于体重公斤数除以身高米数的平方。","source":"general_clinical_guidance"}
+{"id":"factoid-008","category":"factoid","question":"抗生素能治疗普通病毒性感冒吗？","reference_answer":"通常不能。病毒性感冒一般不需要抗生素，滥用会带来不良反应和耐药风险。","source":"general_clinical_guidance"}
+{"id":"factoid-009","category":"factoid","question":"奥司他韦属于抗生素吗？","reference_answer":"不是。奥司他韦是抗病毒药，主要用于流感。","source":"general_clinical_guidance"}
+{"id":"factoid-010","category":"factoid","question":"疫苗接种后出现轻度发热常见吗？","reference_answer":"轻度发热和局部酸痛比较常见，通常短时间内可自行缓解。","source":"general_clinical_guidance"}
+{"id":"advice-011","category":"advice","question":"最近总是熬夜，怎样做更有助于改善睡眠？","reference_answer":"应先规律作息、减少睡前咖啡因和电子屏幕刺激，并保持卧室安静；若长期严重失眠应就医。","source":"general_clinical_guidance"}
+{"id":"advice-012","category":"advice","question":"轻度感冒时在家一般要注意什么？","reference_answer":"可注意休息、补充水分、清淡饮食并观察症状变化；若持续高热或呼吸困难应及时就医。","source":"general_clinical_guidance"}
+{"id":"advice-013","category":"advice","question":"血压有点偏高，生活方式上先做哪些调整？","reference_answer":"建议减少盐摄入、控制体重、规律运动、限制饮酒并监测血压。","source":"general_clinical_guidance"}
+{"id":"advice-014","category":"advice","question":"经常胃食管反流，日常该怎么吃比较稳妥？","reference_answer":"可少量多餐，避免夜宵、油腻辛辣和酒精，餐后不要立刻平躺。","source":"general_clinical_guidance"}
+{"id":"advice-015","category":"advice","question":"换季时鼻炎总发作，有什么通用的自我管理建议？","reference_answer":"应尽量减少过敏原暴露，必要时规律使用医生建议的鼻喷药物并做好室内清洁。","source":"general_clinical_guidance"}
+{"id":"advice-016","category":"advice","question":"腹泻时如何预防脱水？","reference_answer":"少量多次补液，必要时使用口服补液盐；若伴明显乏力、尿少或无法进水应就医。","source":"general_clinical_guidance"}
+{"id":"advice-017","category":"advice","question":"久坐办公人群预防腰背痛有哪些基础建议？","reference_answer":"建议定时起身活动、注意工位姿势、加强核心和背部肌群训练。","source":"general_clinical_guidance"}
+{"id":"advice-018","category":"advice","question":"季节交替时怎么降低呼吸道感染风险？","reference_answer":"可勤洗手、保持通风、规律睡眠，并在人群密集场景注意防护。","source":"general_clinical_guidance"}
+{"id":"advice-019","category":"advice","question":"减肥期间怎样安排饮食更不容易反弹？","reference_answer":"建议控制总热量、保证蛋白质和蔬菜摄入，并采用可持续的饮食和运动习惯。","source":"general_clinical_guidance"}
+{"id":"advice-020","category":"advice","question":"查体发现轻度脂肪肝，通常先从哪些方面调整？","reference_answer":"应优先控制体重、减少精制糖和酒精、增加运动，并结合医生建议复查肝功能。","source":"general_clinical_guidance"}
+{"id":"symptom-021","category":"symptom","question":"喉咙痛两天，没有高烧，多数情况下先考虑什么？","reference_answer":"多数先考虑上呼吸道感染或咽炎，但若吞咽困难明显、持续高热或症状加重需要就医。","source":"general_clinical_guidance"}
+{"id":"symptom-022","category":"symptom","question":"头痛伴恶心一定是脑出血吗？","reference_answer":"不一定，偏头痛、感染、睡眠不足等也可引起，但若突发剧烈头痛或伴神经功能异常需急诊评估。","source":"general_clinical_guidance"}
+{"id":"symptom-023","category":"symptom","question":"咳嗽一周但没有发热，常见可能性有哪些？","reference_answer":"可能与病毒感染恢复期、鼻后滴漏、过敏或气道高反应有关，若迁延或加重应就医。","source":"general_clinical_guidance"}
+{"id":"symptom-024","category":"symptom","question":"胸口偶尔刺痛几秒钟，是否一定是心脏病？","reference_answer":"不一定，肌肉骨骼疼痛也常见，但若胸痛持续、活动后加重或伴气短出汗需及时就医。","source":"general_clinical_guidance"}
+{"id":"symptom-025","category":"symptom","question":"运动后心跳快很久下不来，应该注意什么？","reference_answer":"先停止运动、休息补水并观察；若心悸明显、胸闷头晕或反复发作，应就医检查。","source":"general_clinical_guidance"}
+{"id":"symptom-026","category":"symptom","question":"饭后总觉得上腹胀痛，最常见的原因会是什么？","reference_answer":"消化不良、胃炎或反流都较常见，但若黑便、呕血或体重下降应及时就医。","source":"general_clinical_guidance"}
+{"id":"symptom-027","category":"symptom","question":"手脚发麻是不是一定是颈椎病？","reference_answer":"不一定，电解质紊乱、焦虑、周围神经问题等也可能导致，持续或加重需评估。","source":"general_clinical_guidance"}
+{"id":"symptom-028","category":"symptom","question":"月经推迟并伴轻微腹痛，一般先想到哪些情况？","reference_answer":"可能与妊娠、内分泌波动或压力有关；若有妊娠可能，建议先做验孕并关注疼痛是否加重。","source":"general_clinical_guidance"}
+{"id":"symptom-029","category":"symptom","question":"排尿疼痛加尿频，常见提示什么问题？","reference_answer":"常见于尿路感染，但需要结合尿检等检查确认。","source":"general_clinical_guidance"}
+{"id":"symptom-030","category":"symptom","question":"眼睛红痒流泪，最常见的几种原因是什么？","reference_answer":"结膜炎、过敏或用眼刺激都较常见；若视力下降或明显眼痛应尽快就医。","source":"general_clinical_guidance"}
+{"id":"triage-031","category":"triage","question":"成年人低烧 37.8 度，需要立刻去急诊吗？","reference_answer":"单纯低热通常不需要立刻急诊，但若合并呼吸困难、意识异常、严重脱水或基础病恶化应及时就医。","source":"general_clinical_guidance"}
+{"id":"triage-032","category":"triage","question":"胸痛伴大汗和恶心，应该怎么处理？","reference_answer":"这属于需要立即急诊评估的情况，应尽快就医或呼叫急救。","source":"general_clinical_guidance"}
+{"id":"triage-033","category":"triage","question":"孩子高烧抽搐一次后已经缓解，接下来是否还需要就医？","reference_answer":"通常仍建议尽快就医评估，尤其是首次抽搐、抽搐时间较长或精神状态异常时。","source":"general_clinical_guidance"}
+{"id":"triage-034","category":"triage","question":"突然一侧肢体无力说话含糊，下一步最重要的动作是什么？","reference_answer":"应立即拨打急救电话并尽快送急诊，因为需要尽快排查脑卒中。","source":"general_clinical_guidance"}
+{"id":"triage-035","category":"triage","question":"腹泻三天并出现尿量明显减少，要不要就诊？","reference_answer":"需要尽快就医，尿量减少提示可能已经出现明显脱水。","source":"general_clinical_guidance"}
+{"id":"triage-036","category":"triage","question":"发热伴皮疹，而且精神很差，这种情况危险吗？","reference_answer":"这类情况需要及时就医评估，因为可能存在较重感染或药物反应等问题。","source":"general_clinical_guidance"}
+{"id":"triage-037","category":"triage","question":"外伤后头痛逐渐加重并反复呕吐，应该怎么办？","reference_answer":"需要尽快急诊评估，以排除颅脑损伤或颅内出血。","source":"general_clinical_guidance"}
+{"id":"triage-038","category":"triage","question":"血糖仪测到很低还出冷汗手抖，是否需要马上处理？","reference_answer":"需要立即补充快速糖分并尽快评估原因；若意识不清或无法进食应急诊处理。","source":"general_clinical_guidance"}
+{"id":"triage-039","category":"triage","question":"突然喘不上气并嘴唇发紫，应该先做什么？","reference_answer":"这是急症，应立即呼叫急救并尽快获得氧合支持和医疗评估。","source":"general_clinical_guidance"}
+{"id":"triage-040","category":"triage","question":"持续高烧超过三天且退烧药效果差，是否需要去医院？","reference_answer":"通常建议就医评估，尤其在症状持续加重、伴呼吸困难或明显虚弱时。","source":"general_clinical_guidance"}
+{"id":"factoid-041","category":"factoid","question":"贫血最常见的化验提示之一是什么？","reference_answer":"血常规中血红蛋白降低是常见提示，但具体原因还需进一步检查。","source":"general_clinical_guidance"}
+{"id":"advice-042","category":"advice","question":"体检发现尿酸偏高，生活上先注意什么？","reference_answer":"应注意控制体重、减少高嘌呤饮食和酒精，保证充足饮水并按医嘱复查。","source":"general_clinical_guidance"}
+{"id":"symptom-043","category":"symptom","question":"最近总觉得口渴和尿多，可能和什么有关？","reference_answer":"可能与血糖异常、饮水增加或其他代谢问题有关，建议尽快检查。","source":"general_clinical_guidance"}
+{"id":"triage-044","category":"triage","question":"服药后出现面部肿胀和呼吸不顺，是不是紧急情况？","reference_answer":"是，需立即停药并尽快急诊处理，因为要警惕严重过敏反应。","source":"general_clinical_guidance"}
+{"id":"factoid-045","category":"factoid","question":"乙肝表面抗体阳性通常代表什么？","reference_answer":"通常提示对乙肝已有免疫保护，可能来自既往接种疫苗或感染后恢复。","source":"general_clinical_guidance"}
+{"id":"advice-046","category":"advice","question":"跑步后膝盖轻微不适，恢复期通常要怎么安排？","reference_answer":"可先减少负荷、冰敷、观察肿胀情况，并逐步恢复训练；若持续疼痛应就医。","source":"general_clinical_guidance"}
+{"id":"symptom-047","category":"symptom","question":"持续耳鸣常见会和哪些因素有关？","reference_answer":"可能与噪声暴露、耳部疾病、药物或血压等因素有关，持续存在建议专科评估。","source":"general_clinical_guidance"}
+{"id":"triage-048","category":"triage","question":"怀疑食物中毒后不停呕吐，什么时候该去医院？","reference_answer":"若无法进水、出现血便高热、严重腹痛或明显脱水，应尽快就医。","source":"general_clinical_guidance"}
+{"id":"factoid-049","category":"factoid","question":"骨质疏松筛查常用哪类检查？","reference_answer":"骨密度检查是常用的筛查方式之一。","source":"general_clinical_guidance"}
+{"id":"advice-050","category":"advice","question":"长期伏案后眼睛干涩，平时可以怎样缓解？","reference_answer":"可以减少连续盯屏时间、增加眨眼、适当热敷，并按需使用人工泪液。","source":"general_clinical_guidance"}

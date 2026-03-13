@@ -1,0 +1,40 @@
+{
+  "num_gpus": 1,
+  "memory_per_gpu": 32000,
+  "zero_copy_memory_per_node": 120000,
+  "num_cpus": 8,
+  "legion_utility_processors": 8,
+  "data_parallelism_degree": 1,
+  "tensor_parallelism_degree": 1,
+  "pipeline_parallelism_degree": 1,
+  "offload": false,
+  "offload_reserve_space_size": 1048576,
+  "use_4bit_quantization": false,
+  "use_8bit_quantization": false,
+  "profiling": false,
+  "inference_debugging": false,
+  "fusion": true,
+  "llm_model": "huggyllama/llama-7b",
+  "cache_path": "/autodl-tmp/.cache/flexflow",
+  "refresh_cache": false,
+  "full_precision": false,
+  "output_file": "",
+  "server": {
+    "mode": "specinfer",
+    "host": "0.0.0.0",
+    "port": 8000,
+    "cors_origins": ["*"],
+    "max_requests_per_batch": 1,
+    "max_seq_length": 256,
+    "max_tokens_per_batch": 128,
+    "default_max_length": 128
+  },
+  "ssms": [
+    {
+      "ssm_model": "JackFram/llama-68m",
+      "cache_path": "/autodl-tmp/.cache/flexflow",
+      "refresh_cache": false,
+      "full_precision": false
+    }
+  ]
+}
