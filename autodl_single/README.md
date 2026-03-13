@@ -21,6 +21,29 @@ Clone the repository to:
 
 The scripts assume the repository is on a data disk and that you `source autodl_single/env.sh` before running FlexFlow commands.
 
+## Mainland mirror defaults
+
+The kit defaults to these mirror-friendly settings:
+
+- Miniconda installer: Tsinghua mirror
+- Conda channels: Tsinghua mirror for `defaults` and `conda-forge`
+- Pip index: Tsinghua PyPI mirror
+- Rust toolchain: `rsproxy.cn`
+- HuggingFace: `https://hf-mirror.com`
+- UCX tarball: `ghfast.top` first, then GitHub origin as fallback
+
+Override them if your environment prefers a different mirror:
+
+```bash
+MINICONDA_INSTALLER_URL=...
+PIP_INDEX_URL=...
+PIP_TRUSTED_HOST=...
+RUSTUP_DIST_SERVER=...
+RUSTUP_UPDATE_ROOT=...
+UCX_TARBALL_URL=...
+HF_ENDPOINT=...
+```
+
 ## Clean setup sequence
 
 ```bash
