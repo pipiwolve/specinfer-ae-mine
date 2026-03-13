@@ -53,19 +53,29 @@ else
   source /root/miniconda3/bin/activate
 fi
 
-conda config --remove-key channels >/dev/null 2>&1 || true
-conda config --add channels conda-forge >/dev/null
-conda config --add channels defaults >/dev/null
-conda config --set auto_activate_base false >/dev/null
-conda config --set channel_priority flexible >/dev/null
-conda config --set default_channels "['https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main','https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r']" >/dev/null
-conda config --set custom_channels.conda-forge https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud >/dev/null
-conda config --set show_channel_urls true >/dev/null
-conda config --set remote_connect_timeout_secs 30 >/dev/null
-conda config --set remote_read_timeout_secs 120 >/dev/null
-conda config --set remote_max_retries 10 >/dev/null
-conda config --set remote_backoff_factor 2 >/dev/null
-conda config --set repodata_fns '["current_repodata.json", "repodata.json"]' >/dev/null
+cat > /root/.condarc <<EOF
+show_channel_urls: true
+channel_priority: flexible
+channels:
+  - conda-forge
+  - defaults
+default_channels:
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r
+custom_channels:
+  conda-forge: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+ssl_verify: true
+remote_connect_timeout_secs: 30
+remote_read_timeout_secs: 120
+remote_max_retries: 10
+remote_backoff_factor: 2
+repodata_fns:
+  - current_repodata.json
+  - repodata.json
+solver: classic
+auto_activate_base: false
+EOF
+
 conda clean -i -y >/dev/null 2>&1 || true
 
 if ! conda env list | awk '{print $1}' | grep -qx flexflow; then
