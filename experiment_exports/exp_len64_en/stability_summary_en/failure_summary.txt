@@ -1,0 +1,14 @@
+[incr] total=50
+ok=46 ratio=0.920000
+truncated=4 ratio=0.080000
+garbled=0 ratio=0.000000
+off_topic=0 ratio=0.000000
+runtime_error=0 ratio=0.000000
+
+[spec] total=50
+ok=46 ratio=0.920000
+truncated=4 ratio=0.080000
+garbled=0 ratio=0.000000
+off_topic=0 ratio=0.000000
+runtime_error=0 ratio=0.000000
+

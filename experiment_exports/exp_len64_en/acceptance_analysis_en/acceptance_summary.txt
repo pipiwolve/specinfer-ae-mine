@@ -1,0 +1,5 @@
+mean_acceptance_ratio=0.991048
+median_acceptance_ratio=1.000000
+mean_verified_tokens=
+median_verified_tokens=
+metric_source=output_agreement_proxy

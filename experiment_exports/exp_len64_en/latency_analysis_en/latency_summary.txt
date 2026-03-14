@@ -1,0 +1,7 @@
+baseline_mean=0.936039
+baseline_p50=0.187714
+baseline_p95=0.331746
+spec_mean=1.212851
+spec_p50=0.403788
+spec_p95=0.662433
+average_speedup=0.477090

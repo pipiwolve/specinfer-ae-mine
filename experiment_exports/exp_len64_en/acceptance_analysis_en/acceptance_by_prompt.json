@@ -1,0 +1,402 @@
+{
+  "factoid-001": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 0.7846153846153846,
+    "median_acceptance_ratio": 0.7846153846153846,
+    "mean_verified_tokens": NaN
+  },
+  "factoid-002": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "factoid-003": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "factoid-004": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "factoid-005": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "factoid-006": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "factoid-007": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "factoid-008": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "factoid-009": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "factoid-010": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "advice-011": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "advice-012": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "advice-013": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "advice-014": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "advice-015": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 0.9384615384615385,
+    "median_acceptance_ratio": 0.9384615384615385,
+    "mean_verified_tokens": NaN
+  },
+  "advice-016": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "advice-017": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "advice-018": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "advice-019": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "advice-020": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "symptom-021": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "symptom-022": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "symptom-023": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "symptom-024": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "symptom-025": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "symptom-026": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "symptom-027": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "symptom-028": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "symptom-029": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "symptom-030": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "triage-031": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "triage-032": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 0.9230769230769231,
+    "median_acceptance_ratio": 0.9230769230769231,
+    "mean_verified_tokens": NaN
+  },
+  "triage-033": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "triage-034": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 0.90625,
+    "median_acceptance_ratio": 0.90625,
+    "mean_verified_tokens": NaN
+  },
+  "triage-035": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "triage-036": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "triage-037": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "triage-038": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "triage-039": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "triage-040": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "factoid-041": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "advice-042": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "symptom-043": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "triage-044": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "factoid-045": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "advice-046": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "symptom-047": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "triage-048": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "factoid-049": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  },
+  "advice-050": {
+    "metric_types": [
+      "output_agreement_proxy"
+    ],
+    "mean_acceptance_ratio": 1.0,
+    "median_acceptance_ratio": 1.0,
+    "mean_verified_tokens": NaN
+  }
+}
