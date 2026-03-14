@@ -32,6 +32,7 @@ The kit defaults to these mirror-friendly settings:
 - HuggingFace: `https://hf-mirror.com`
 - UCX tarball: `ghfast.top` first, then GitHub origin as fallback
 - Conda SSL verification: disabled by default for proxy-heavy AutoDL environments
+- HuggingFace, Transformers, pip, torch, and conda package caches: all redirected to `/autodl-tmp/.cache`
 
 Override them if your environment prefers a different mirror:
 

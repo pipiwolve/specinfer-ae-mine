@@ -122,6 +122,14 @@ find "${REPO_ROOT}/FlexFlow" -path '*tokenizers-c*' -name 'lib.rs' -exec \
 
 bash ./install_specinfer.sh
 
+make -C "${REPO_ROOT}/FlexFlow/python" FF_HOME="${REPO_ROOT}/FlexFlow" -j1 \
+  legion_builtin_cffi.py \
+  legion_canonical_cffi.py \
+  legion_info.py \
+  legion_cffi.py \
+  legion_top.py \
+  flexflow/core/flexflow_cffi_header.py || true
+
 if [[ -f "${REPO_ROOT}/FlexFlow/build/deps/legion/runtime/legion/legion_defines.h" ]]; then
   cp "${REPO_ROOT}/FlexFlow/build/deps/legion/runtime/legion/legion_defines.h" \
     "${REPO_ROOT}/FlexFlow/deps/legion/runtime/legion/legion_defines.h"
@@ -135,7 +143,8 @@ fi
 if [[ -f "${REPO_ROOT}/FlexFlow/deps/legion/bindings/python/legion_cffi_build.py" ]]; then
   (
     cd "${REPO_ROOT}/FlexFlow/deps/legion/bindings/python"
-    python legion_cffi_build.py || true
+    python legion_cffi_build.py --defines-dir "${REPO_ROOT}/FlexFlow/build/deps/legion/runtime" --output-dir "${REPO_ROOT}/FlexFlow/python" || true
+    python legion_cffi_build.py --canonical --defines-dir "${REPO_ROOT}/FlexFlow/build/deps/legion/runtime" --libname liblegion_canonical_python.so --output-dir "${REPO_ROOT}/FlexFlow/python" || true
   )
 fi
 
