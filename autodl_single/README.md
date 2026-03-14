@@ -138,6 +138,19 @@ python autodl_single/split_dataset.py \
   --prefix english_medical_qa_25
 ```
 
+Only merge when you actually ran multiple split outputs. If a single run already produced
+`incr_batch_r1_en/results.csv` or `spec_batch_r1_en/results.csv`, skip merging.
+
+Example merge for split runs:
+
+```bash
+python -m autodl_single.merge_batch_results \
+  --inputs \
+    FlexFlow/inference/output/autodl_single/incr_batch_r1_en_01 \
+    FlexFlow/inference/output/autodl_single/incr_batch_r1_en_02 \
+  --output-dir FlexFlow/inference/output/autodl_single/incr_batch_r1_en
+```
+
 Summarize stability and failure categories:
 
 ```bash
