@@ -11,23 +11,87 @@ cd "${REPO_ROOT}"
 
 OUTPUT_DIR="${REPO_ROOT}/FlexFlow/inference/output/autodl_single/smoke"
 PROMPT_FILE="${REPO_ROOT}/autodl_single/prompts/smoke_test.json"
+STDOUT_LOG="${OUTPUT_DIR}/incr_single.out"
+WRAPPER_LOG="${OUTPUT_DIR}/incr_single.wrapper.log"
+STRACE_LOG="${OUTPUT_DIR}/incr_single.strace.log"
 mkdir -p "${OUTPUT_DIR}"
 
-./FlexFlow/build/inference/incr_decoding/incr_decoding \
-  -ll:cpu 8 \
-  -ll:util 8 \
-  -ll:gpu 1 \
-  -ll:fsize 30000 \
-  -ll:zsize 120000 \
-  -cache-folder "${FF_CACHE_DIR}" \
-  -llm-model huggyllama/llama-7b \
-  -prompt "${PROMPT_FILE}" \
-  --max-requests-per-batch 1 \
-  --max-tokens-per-batch 128 \
-  --max-sequence-length 128 \
-  -tensor-parallelism-degree 1 \
-  --fusion \
-  -output-file "${OUTPUT_DIR}/incr_single.txt" \
-  > "${OUTPUT_DIR}/incr_single.out" 2>&1
+LL_CPU="${FF_SMOKE_CPU:-4}"
+LL_UTIL="${FF_SMOKE_UTIL:-4}"
+LL_GPU="${FF_SMOKE_GPU:-1}"
+LL_FSIZE_MB="${FF_SMOKE_FSIZE_MB:-34000}"
+LL_ZSIZE_MB="${FF_SMOKE_ZSIZE_MB:-30000}"
+MAX_REQUESTS="${FF_SMOKE_MAX_REQUESTS:-1}"
+MAX_TOKENS="${FF_SMOKE_MAX_TOKENS:-64}"
+MAX_SEQ_LEN="${FF_SMOKE_MAX_SEQ_LEN:-64}"
+TP_DEGREE="${FF_SMOKE_TP_DEGREE:-1}"
+LLM_MODEL="${FF_SMOKE_LLM_MODEL:-huggyllama/llama-7b}"
+OUTPUT_FILE="${OUTPUT_DIR}/incr_single.txt"
 
-echo "Incremental smoke test finished: ${OUTPUT_DIR}/incr_single.out"
+CMD=(
+  ./FlexFlow/build/inference/incr_decoding/incr_decoding
+  -ll:cpu "${LL_CPU}"
+  -ll:util "${LL_UTIL}"
+  -ll:gpu "${LL_GPU}"
+  -ll:fsize "${LL_FSIZE_MB}"
+  -ll:zsize "${LL_ZSIZE_MB}"
+  -cache-folder "${FF_CACHE_DIR}"
+  -llm-model "${LLM_MODEL}"
+  -prompt "${PROMPT_FILE}"
+  --max-requests-per-batch "${MAX_REQUESTS}"
+  --max-tokens-per-batch "${MAX_TOKENS}"
+  --max-sequence-length "${MAX_SEQ_LEN}"
+  -tensor-parallelism-degree "${TP_DEGREE}"
+  --fusion
+  -output-file "${OUTPUT_FILE}"
+)
+
+{
+  echo "Running incremental smoke test"
+  echo "Command:"
+  printf ' %q' "${CMD[@]}"
+  printf '\n'
+  echo "Logs:"
+  echo "  stdout/stderr -> ${STDOUT_LOG}"
+  echo "  wrapper       -> ${WRAPPER_LOG}"
+  if [[ "${FF_ENABLE_STRACE:-0}" == "1" ]]; then
+    echo "  strace        -> ${STRACE_LOG}"
+  fi
+  echo "Parameters:"
+  echo "  ll:cpu=${LL_CPU}"
+  echo "  ll:util=${LL_UTIL}"
+  echo "  ll:gpu=${LL_GPU}"
+  echo "  ll:fsize=${LL_FSIZE_MB}"
+  echo "  ll:zsize=${LL_ZSIZE_MB}"
+  echo "  max_requests=${MAX_REQUESTS}"
+  echo "  max_tokens=${MAX_TOKENS}"
+  echo "  max_seq_len=${MAX_SEQ_LEN}"
+  echo "  tp_degree=${TP_DEGREE}"
+  echo "  cache_folder=${FF_CACHE_DIR}"
+} | tee "${WRAPPER_LOG}"
+
+set +e
+if [[ "${FF_ENABLE_STRACE:-0}" == "1" ]]; then
+  stdbuf -oL -eL strace -f -s 256 -o "${STRACE_LOG}" "${CMD[@]}" 2>&1 | tee "${STDOUT_LOG}"
+  STATUS=${PIPESTATUS[0]}
+else
+  stdbuf -oL -eL "${CMD[@]}" 2>&1 | tee "${STDOUT_LOG}"
+  STATUS=${PIPESTATUS[0]}
+fi
+set -e
+
+{
+  echo "Exit status: ${STATUS}"
+  if [[ "${STATUS}" -eq 0 ]]; then
+    echo "Incremental smoke test finished successfully."
+  else
+    echo "Incremental smoke test failed."
+    echo "Inspect:"
+    echo "  tail -n 120 ${STDOUT_LOG}"
+    if [[ "${FF_ENABLE_STRACE:-0}" == "1" ]]; then
+      echo "  tail -n 120 ${STRACE_LOG}"
+    fi
+  fi
+} | tee -a "${WRAPPER_LOG}"
+
+exit "${STATUS}"
