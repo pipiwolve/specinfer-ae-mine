@@ -2,6 +2,7 @@
 import argparse
 import csv
 import json
+import re
 import traceback
 from pathlib import Path
 
@@ -39,6 +40,38 @@ def make_prompt(record: dict) -> str:
     )
 
 
+def classify_quality(output_text: str, error: str) -> str:
+    if error:
+        return "runtime_error"
+
+    text = output_text.strip()
+    if not text:
+        return "runtime_error"
+
+    if "�" in text:
+        return "garbled"
+
+    repeated_ascii = re.search(r"([A-Za-z]{2,})\1{2,}", text)
+    repeated_cjk = re.search(r"([\u4e00-\u9fff]{1,3})\1{4,}", text)
+    if repeated_ascii or repeated_cjk:
+        return "garbled"
+
+    if len(text) < 8:
+        return "truncated"
+
+    if text.endswith((":", "：", ",", "，", "(", "（", "高�")):
+        return "truncated"
+
+    sentence_endings = ("。", "！", "？", ".", "!", "?", "；", ";")
+    if len(text) < 24 and not text.endswith(sentence_endings):
+        return "truncated"
+
+    if not re.search(r"[\u4e00-\u9fffA-Za-z]", text):
+        return "garbled"
+
+    return "ok"
+
+
 def main():
     args = parse_args()
     output_dir = ensure_output_dir(args.output_dir)
@@ -62,6 +95,10 @@ def main():
                     "reference_answer": record["reference_answer"],
                     "source": record["source"],
                 }
+                print(
+                    f"[BatchStart] mode={args.mode} id={record['id']} repeat={repeat} category={record['category']}",
+                    flush=True,
+                )
                 try:
                     result = runner.generate_text(prompt, max_length=args.max_length)
                     row.update(
@@ -88,6 +125,13 @@ def main():
                         }
                     )
                     traceback.print_exc()
+                row["quality_flag"] = classify_quality(row["output_text"].replace("\\n", "\n"), row["error"])
+                print(
+                    f"[BatchEnd] mode={args.mode} id={row['id']} repeat={row['repeat']} "
+                    f"success={row['success']} quality_flag={row['quality_flag']} "
+                    f"latency_seconds={row['latency_seconds'] or 'NA'}",
+                    flush=True,
+                )
                 rows.append(row)
     finally:
         runner.stop()
@@ -107,6 +151,7 @@ def main():
         "total_tokens",
         "output_text",
         "error",
+        "quality_flag",
     ]
     with open(results_path, "w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=fieldnames)

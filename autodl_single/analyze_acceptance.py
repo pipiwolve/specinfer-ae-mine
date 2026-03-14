@@ -21,6 +21,14 @@ ACCEPT_PATTERNS = [
 REJECT_PATTERNS = [
     re.compile(r"rejected[_ ]tokens[:=]\s*(\d+)", re.IGNORECASE),
 ]
+VERIFIED_PATTERNS = [
+    re.compile(r"Number of Verified Tokens\s*=\s*(\d+)", re.IGNORECASE),
+]
+ROW_END_PATTERN = re.compile(
+    r"\[BatchEnd\]\s+mode=(?P<mode>\w+)\s+id=(?P<id>[^ ]+)\s+repeat=(?P<repeat>\d+)\s+"
+    r"success=(?P<success>\d+)\s+quality_flag=(?P<quality_flag>[^ ]+)",
+    re.IGNORECASE,
+)
 
 
 def parse_args():
@@ -41,15 +49,35 @@ def load_rows(path: str):
 def parse_logs(log_glob: str):
     accepted = []
     rejected = []
+    verified = []
+    per_prompt_verified = []
     if not log_glob:
-        return accepted, rejected
+        return accepted, rejected, verified, per_prompt_verified
     for path in glob.glob(log_glob):
         text = Path(path).read_text(encoding="utf-8", errors="ignore")
+        current_verified = []
+        for line in text.splitlines():
+            for pattern in VERIFIED_PATTERNS:
+                current_verified.extend(int(match) for match in pattern.findall(line))
+            row_end = ROW_END_PATTERN.search(line)
+            if row_end:
+                if current_verified:
+                    per_prompt_verified.append(
+                        {
+                            "id": row_end.group("id"),
+                            "repeat": row_end.group("repeat"),
+                            "metric_type": "verified_tokens_per_step",
+                            "verified_tokens_mean": mean(current_verified),
+                            "acceptance_ratio": math.nan,
+                        }
+                    )
+                    verified.extend(current_verified)
+                current_verified = []
         for pattern in ACCEPT_PATTERNS:
             accepted.extend(int(match) for match in pattern.findall(text))
         for pattern in REJECT_PATTERNS:
             rejected.extend(int(match) for match in pattern.findall(text))
-    return accepted, rejected
+    return accepted, rejected, verified, per_prompt_verified
 
 
 def compute_output_agreement(spec_rows, baseline_rows, tokenizer_model):
@@ -88,7 +116,7 @@ def main():
     spec_rows = load_rows(args.spec_results)
     baseline_rows = load_rows(args.baseline_results) if args.baseline_results else []
 
-    accepted, rejected = parse_logs(args.log_glob)
+    accepted, rejected, verified, per_prompt_verified = parse_logs(args.log_glob)
     metrics = []
 
     if accepted:
@@ -102,25 +130,44 @@ def main():
                 "repeat": "all",
                 "metric_type": "log_parsed_acceptance",
                 "acceptance_ratio": ratio,
+                "verified_tokens_mean": math.nan,
             }
         )
+    if per_prompt_verified:
+        metrics.extend(per_prompt_verified)
     elif baseline_rows:
         metrics = compute_output_agreement(spec_rows, baseline_rows, args.tokenizer_model)
 
     metrics_path = output_dir / "acceptance_metrics.csv"
     with open(metrics_path, "w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=["id", "repeat", "metric_type", "acceptance_ratio"])
+        writer = csv.DictWriter(
+            handle,
+            fieldnames=["id", "repeat", "metric_type", "acceptance_ratio", "verified_tokens_mean"],
+        )
         writer.writeheader()
         writer.writerows(metrics)
 
     by_prompt = {}
     for metric in metrics:
-        by_prompt.setdefault(metric["id"], []).append(metric["acceptance_ratio"])
+        by_prompt.setdefault(metric["id"], []).append(metric)
     per_prompt = {
         key: {
-            "metric_type": values and next((m["metric_type"] for m in metrics if m["id"] == key), ""),
-            "mean_acceptance_ratio": mean(values),
-            "median_acceptance_ratio": median(values),
+            "metric_types": sorted({value["metric_type"] for value in values}),
+            "mean_acceptance_ratio": mean(
+                value["acceptance_ratio"] for value in values if not math.isnan(value.get("acceptance_ratio", math.nan))
+            )
+            if any(not math.isnan(value.get("acceptance_ratio", math.nan)) for value in values)
+            else math.nan,
+            "median_acceptance_ratio": median(
+                value["acceptance_ratio"] for value in values if not math.isnan(value.get("acceptance_ratio", math.nan))
+            )
+            if any(not math.isnan(value.get("acceptance_ratio", math.nan)) for value in values)
+            else math.nan,
+            "mean_verified_tokens": mean(
+                value["verified_tokens_mean"] for value in values if not math.isnan(value.get("verified_tokens_mean", math.nan))
+            )
+            if any(not math.isnan(value.get("verified_tokens_mean", math.nan)) for value in values)
+            else math.nan,
         }
         for key, values in by_prompt.items()
     }
@@ -147,6 +194,12 @@ def main():
         else:
             handle.write("mean_acceptance_ratio=\n")
             handle.write("median_acceptance_ratio=\n")
+        if verified:
+            handle.write(f"mean_verified_tokens={mean(verified):.6f}\n")
+            handle.write(f"median_verified_tokens={median(verified):.6f}\n")
+        else:
+            handle.write("mean_verified_tokens=\n")
+            handle.write("median_verified_tokens=\n")
         handle.write(f"metric_source={metrics[0]['metric_type'] if metrics else 'unavailable'}\n")
 
     print(f"Wrote acceptance summary to {metrics_path}")

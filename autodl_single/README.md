@@ -109,9 +109,9 @@ python autodl_single/run_medical_batch.py \
   --mode incr \
   --config autodl_single/configs/incr_single_a100.json \
   --dataset autodl_single/datasets/medical_qa_50.jsonl \
-  --output-dir FlexFlow/inference/output/autodl_single/incr_batch \
-  --repeats 3 \
-  --max-length 128
+  --output-dir FlexFlow/inference/output/autodl_single/incr_batch_r1 \
+  --repeats 1 \
+  --max-length 64
 ```
 
 Run speculative inference:
@@ -123,17 +123,48 @@ python autodl_single/run_medical_batch.py \
   --mode spec \
   --config autodl_single/configs/specinfer_single_a100.json \
   --dataset autodl_single/datasets/medical_qa_50.jsonl \
-  --output-dir FlexFlow/inference/output/autodl_single/spec_batch \
-  --repeats 3 \
-  --max-length 128
+  --output-dir FlexFlow/inference/output/autodl_single/spec_batch_r1 \
+  --repeats 1 \
+  --max-length 64
+
+If the full 50-question dataset is not stable, split it first:
+
+```bash
+python autodl_single/split_dataset.py \
+  --dataset autodl_single/datasets/medical_qa_50.jsonl \
+  --parts 2 \
+  --output-dir autodl_single/datasets/splits \
+  --prefix medical_qa_25
+```
+
+Summarize stability and failure categories:
+
+```bash
+python autodl_single/summarize_batch_results.py \
+  --inputs \
+    FlexFlow/inference/output/autodl_single/incr_batch_r1/results.csv \
+    FlexFlow/inference/output/autodl_single/spec_batch_r1/results.csv \
+  --output-dir FlexFlow/inference/output/autodl_single/stability_summary
+```
+
+Select a stable subset for repeat-3 latency experiments:
+
+```bash
+python autodl_single/select_stable_subset.py \
+  --baseline FlexFlow/inference/output/autodl_single/incr_batch_r1/results.csv \
+  --spec FlexFlow/inference/output/autodl_single/spec_batch_r1/results.csv \
+  --dataset autodl_single/datasets/medical_qa_50.jsonl \
+  --output-dir FlexFlow/inference/output/autodl_single/stable_subset \
+  --limit 15
+```
 ```
 
 Analyze latency:
 
 ```bash
 python autodl_single/analyze_latency.py \
-  --baseline FlexFlow/inference/output/autodl_single/incr_batch/results.csv \
-  --spec FlexFlow/inference/output/autodl_single/spec_batch/results.csv \
+  --baseline FlexFlow/inference/output/autodl_single/incr_batch_r1/results.csv \
+  --spec FlexFlow/inference/output/autodl_single/spec_batch_r1/results.csv \
   --output-dir FlexFlow/inference/output/autodl_single/latency_analysis
 ```
 
@@ -141,8 +172,9 @@ Analyze acceptance-style metrics:
 
 ```bash
 python autodl_single/analyze_acceptance.py \
-  --spec-results FlexFlow/inference/output/autodl_single/spec_batch/results.csv \
-  --baseline-results FlexFlow/inference/output/autodl_single/incr_batch/results.csv \
+  --spec-results FlexFlow/inference/output/autodl_single/spec_batch_r1/results.csv \
+  --baseline-results FlexFlow/inference/output/autodl_single/incr_batch_r1/results.csv \
+  --log-glob '/root/autodl-tmp/spec_batch_r1*.log' \
   --output-dir FlexFlow/inference/output/autodl_single/acceptance_analysis
 ```
 
@@ -151,10 +183,11 @@ If your FlexFlow `.out` logs expose accepted or rejected token counts, add them 
 ## Outputs
 
 - Smoke test logs: `FlexFlow/inference/output/autodl_single/smoke`
-- Batch outputs: `FlexFlow/inference/output/autodl_single/{incr_batch,spec_batch}`
+- Batch outputs: `FlexFlow/inference/output/autodl_single/{incr_batch_r1,spec_batch_r1}`
 - API logs: controlled by your `uvicorn` invocation
 - Latency summary: `latency_ab.csv` and `latency_speedup.png`
 - Acceptance summary: `acceptance_metrics.csv`, `acceptance_by_prompt.json`, and `acceptance_distribution.png`
+- Stability summary: `failure_summary.csv`
 
 ## Notes
 
