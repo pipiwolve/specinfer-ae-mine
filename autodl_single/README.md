@@ -31,6 +31,7 @@ The kit defaults to these mirror-friendly settings:
 - Rust toolchain: `rsproxy.cn`
 - HuggingFace: `https://hf-mirror.com`
 - UCX tarball: `ghfast.top` first, then GitHub origin as fallback
+- Conda SSL verification: disabled by default for proxy-heavy AutoDL environments
 
 Override them if your environment prefers a different mirror:
 
@@ -54,6 +55,16 @@ bash autodl_single/download_7b_68m.sh
 bash autodl_single/run_incr_single.sh
 bash autodl_single/run_spec_single.sh
 ```
+
+What `bootstrap_autodl.sh` now does in practice:
+
+- installs or repairs Miniconda
+- configures mainland mirrors
+- creates the `flexflow` conda env with a low-memory split strategy
+- installs Python dependencies with pip, including the Python `jq` module
+- builds UCX
+- patches the `tokenizers-c` Rust source for newer Rust toolchains
+- builds and installs SpecInfer
 
 ## Start the OpenAI-compatible API
 

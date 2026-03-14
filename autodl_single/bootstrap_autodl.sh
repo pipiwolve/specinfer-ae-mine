@@ -10,6 +10,7 @@ PIP_INDEX_URL="${PIP_INDEX_URL:-https://pypi.tuna.tsinghua.edu.cn/simple}"
 PIP_TRUSTED_HOST="${PIP_TRUSTED_HOST:-pypi.tuna.tsinghua.edu.cn}"
 RUSTUP_DIST_SERVER="${RUSTUP_DIST_SERVER:-https://rsproxy.cn}"
 RUSTUP_UPDATE_ROOT="${RUSTUP_UPDATE_ROOT:-https://rsproxy.cn/rustup}"
+CONDA_SSL_VERIFY="${CONDA_SSL_VERIFY:-false}"
 
 retry() {
   local attempts="$1"
@@ -64,7 +65,7 @@ default_channels:
   - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r
 custom_channels:
   conda-forge: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
-ssl_verify: true
+ssl_verify: ${CONDA_SSL_VERIFY}
 remote_connect_timeout_secs: 30
 remote_read_timeout_secs: 120
 remote_max_retries: 10
@@ -79,10 +80,7 @@ EOF
 conda clean -i -y >/dev/null 2>&1 || true
 
 if ! conda env list | awk '{print $1}' | grep -qx flexflow; then
-  if ! conda list -n base mamba >/dev/null 2>&1; then
-    retry 3 conda install -n base -y mamba
-  fi
-  retry 3 mamba env create -f FlexFlow/conda/flexflow.yml
+  retry 3 conda create -n flexflow -y python=3.10 pip cffi pillow pybind11 jq pytest
 fi
 
 conda activate flexflow
@@ -95,13 +93,34 @@ timeout = 120
 EOF
 
 retry 3 python -m pip install --upgrade pip
-retry 3 python -m pip install fastapi uvicorn matplotlib
+retry 3 python -m pip install \
+  "qualname>=0.1.0" \
+  "keras_preprocessing>=1.1.2" \
+  "numpy>=1.16.0" \
+  regex \
+  onnx \
+  "transformers>=4.31.0" \
+  sentencepiece \
+  einops \
+  requests \
+  jq \
+  fastapi \
+  uvicorn \
+  matplotlib
+retry 3 python -m pip install \
+  --extra-index-url https://download.pytorch.org/whl/cpu \
+  torch \
+  torchvision \
+  torchaudio
 
 if [[ ! -d "${REPO_ROOT}/ucx-1.15.0/install" ]]; then
-  bash install_ucx.sh
+  bash ./install_ucx.sh
 fi
 
-bash install_specinfer.sh
+find "${REPO_ROOT}/FlexFlow" -path '*tokenizers-c*' -name 'lib.rs' -exec \
+  sed -i 's/\*out_len = (\*handle)\.decode_str\.len();/\*out_len = (\&(\*handle)\.decode_str)\.len();/g' {} +
+
+bash ./install_specinfer.sh
 
 if [[ -f "${REPO_ROOT}/FlexFlow/build/deps/legion/runtime/legion/legion_defines.h" ]]; then
   cp "${REPO_ROOT}/FlexFlow/build/deps/legion/runtime/legion/legion_defines.h" \

@@ -3,7 +3,7 @@ set -e
 set -x
 
 # Cd into directory holding this script
-cd "${BASH_SOURCE[0]%/*}"
+cd "$(dirname "${BASH_SOURCE[0]}")"
 
 UCX_TARBALL_URL="${UCX_TARBALL_URL:-https://ghfast.top/https://github.com/openucx/ucx/releases/download/v1.15.0/ucx-1.15.0.tar.gz}"
 if [[ ! -f ucx-1.15.0.tar.gz ]]; then
