@@ -20,6 +20,31 @@ def tokenizer_dir(cache_folder: str, model_name: str) -> Path:
     return Path(cache_folder).expanduser() / "tokenizers" / model_name.lower()
 
 
+def hf_snapshot_dir(model_name: str) -> Path:
+    hf_home = Path(os.environ.get("HF_HOME", "~/.cache/huggingface")).expanduser()
+    repo_dir = hf_home / "hub" / f"models--{model_name.replace('/', '--')}"
+    snapshots_dir = repo_dir / "snapshots"
+    if not snapshots_dir.exists():
+        raise FileNotFoundError(f"HuggingFace snapshot directory missing: {snapshots_dir}")
+    snapshots = sorted((path for path in snapshots_dir.iterdir() if path.is_dir()), key=lambda p: p.name)
+    if not snapshots:
+        raise FileNotFoundError(f"No HuggingFace snapshots found for {model_name} in {snapshots_dir}")
+    return snapshots[-1]
+
+
+def ensure_sentencepiece_tokenizer(cache_folder: str, model_name: str) -> None:
+    dst_dir = tokenizer_dir(cache_folder, model_name)
+    dst_dir.mkdir(parents=True, exist_ok=True)
+    dst_file = dst_dir / "tokenizer.model"
+    if dst_file.exists():
+        return
+    src_file = hf_snapshot_dir(model_name) / "tokenizer.model"
+    if not src_file.exists():
+        raise FileNotFoundError(f"Tokenizer model missing in HF snapshot: {src_file}")
+    shutil.copy2(src_file, dst_file)
+    print(f"Copied sentencepiece tokenizer from {src_file} to {dst_file}")
+
+
 def ensure_tokenizer_fallback(cache_folder: str, source_model: str, target_model: str) -> None:
     src = tokenizer_dir(cache_folder, source_model)
     dst = tokenizer_dir(cache_folder, target_model)
@@ -46,6 +71,8 @@ def download_model(model_name: str, cache_folder: str, refresh_cache: bool, fall
             raise
         print(f"Tokenizer download failed for {model_name}: {exc}")
         ensure_tokenizer_fallback(cache_folder, fallback_model, model_name)
+    if "llama" in model_name.lower():
+        ensure_sentencepiece_tokenizer(cache_folder, model_name)
     llm.download_hf_config()
 
 

@@ -21,7 +21,7 @@ mkdir -p "${OUTPUT_DIR}"
   -ll:zsize 120000 \
   -cache-folder "${FF_CACHE_DIR}" \
   -llm-model huggyllama/llama-7b \
-  -ssm-model JackFram/llama-68m \
+  -ssm-model jackfram/llama-68m \
   -prompt "${PROMPT_FILE}" \
   --max-requests-per-batch 1 \
   --max-tokens-per-batch 128 \
