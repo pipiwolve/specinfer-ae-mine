@@ -3,9 +3,8 @@ import argparse
 import csv
 import json
 from collections import defaultdict
-from pathlib import Path
 
-from autodl_single.common import ensure_output_dir
+from autodl_single.io_utils import ensure_output_dir
 
 
 QUALITY_RANK = {"ok": 0, "truncated": 1, "garbled": 2, "off_topic": 3, "runtime_error": 4}

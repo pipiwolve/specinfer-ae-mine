@@ -9,6 +9,8 @@ from typing import Dict, List, Optional
 import flexflow.serve as ff
 from transformers import AutoTokenizer
 
+from autodl_single.io_utils import ensure_output_dir
+
 
 def repo_root() -> Path:
     return Path(__file__).resolve().parent.parent
@@ -131,9 +133,3 @@ class FlexFlowRunner:
             "completion_tokens": completion_tokens,
             "total_tokens": prompt_tokens + completion_tokens,
         }
-
-
-def ensure_output_dir(path: str) -> Path:
-    output_dir = Path(path)
-    output_dir.mkdir(parents=True, exist_ok=True)
-    return output_dir

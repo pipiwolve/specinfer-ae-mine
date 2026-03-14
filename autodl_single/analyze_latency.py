@@ -7,7 +7,7 @@ from statistics import mean, median
 
 import matplotlib.pyplot as plt
 
-from autodl_single.common import ensure_output_dir
+from autodl_single.io_utils import ensure_output_dir
 
 
 def parse_args():

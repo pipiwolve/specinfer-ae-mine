@@ -11,7 +11,7 @@ from statistics import mean, median
 import matplotlib.pyplot as plt
 from transformers import AutoTokenizer
 
-from autodl_single.common import ensure_output_dir
+from autodl_single.io_utils import ensure_output_dir
 
 
 ACCEPT_PATTERNS = [

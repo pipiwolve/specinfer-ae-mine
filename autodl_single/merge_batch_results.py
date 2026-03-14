@@ -2,9 +2,8 @@
 import argparse
 import csv
 import json
-from pathlib import Path
 
-from autodl_single.common import ensure_output_dir
+from autodl_single.io_utils import ensure_output_dir
 
 
 def parse_args():

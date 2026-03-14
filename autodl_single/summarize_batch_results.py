@@ -2,9 +2,8 @@
 import argparse
 import csv
 from collections import Counter, defaultdict
-from pathlib import Path
 
-from autodl_single.common import ensure_output_dir
+from autodl_single.io_utils import ensure_output_dir
 
 
 QUALITY_ORDER = ["ok", "truncated", "garbled", "off_topic", "runtime_error"]
