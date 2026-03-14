@@ -10,6 +10,7 @@ This directory turns the upstream artifact into a single-node, single-GPU workfl
 - Adds an OpenAI-compatible FastAPI server on top of FlexFlow Serve
 - Adds batch runners for the 50-question medical workload
 - Adds analysis scripts for latency and acceptance-style metrics
+- Supports a second English medical QA workload for cleaner SpecInfer mechanism experiments
 
 ## Expected remote layout
 
@@ -100,7 +101,7 @@ curl http://127.0.0.1:8000/v1/chat/completions \
 
 ## Batch experiments
 
-Run baseline incremental decoding:
+Run baseline incremental decoding on the English mechanism dataset:
 
 ```bash
 cd /root/autodl-tmp/work/specinfer-ae
@@ -108,13 +109,13 @@ source autodl_single/env.sh
 python autodl_single/run_medical_batch.py \
   --mode incr \
   --config autodl_single/configs/incr_single_a100.json \
-  --dataset autodl_single/datasets/medical_qa_50.jsonl \
+  --dataset autodl_single/datasets/english_medical_qa_50.jsonl \
   --output-dir FlexFlow/inference/output/autodl_single/incr_batch_r1 \
   --repeats 1 \
   --max-length 64
 ```
 
-Run speculative inference:
+Run speculative inference on the English mechanism dataset:
 
 ```bash
 cd /root/autodl-tmp/work/specinfer-ae
@@ -122,7 +123,7 @@ source autodl_single/env.sh
 python autodl_single/run_medical_batch.py \
   --mode spec \
   --config autodl_single/configs/specinfer_single_a100.json \
-  --dataset autodl_single/datasets/medical_qa_50.jsonl \
+  --dataset autodl_single/datasets/english_medical_qa_50.jsonl \
   --output-dir FlexFlow/inference/output/autodl_single/spec_batch_r1 \
   --repeats 1 \
   --max-length 64
@@ -131,10 +132,10 @@ If the full 50-question dataset is not stable, split it first:
 
 ```bash
 python autodl_single/split_dataset.py \
-  --dataset autodl_single/datasets/medical_qa_50.jsonl \
+  --dataset autodl_single/datasets/english_medical_qa_50.jsonl \
   --parts 2 \
   --output-dir autodl_single/datasets/splits \
-  --prefix medical_qa_25
+  --prefix english_medical_qa_25
 ```
 
 Summarize stability and failure categories:
@@ -153,7 +154,7 @@ Select a stable subset for repeat-3 latency experiments:
 python autodl_single/select_stable_subset.py \
   --baseline FlexFlow/inference/output/autodl_single/incr_batch_r1/results.csv \
   --spec FlexFlow/inference/output/autodl_single/spec_batch_r1/results.csv \
-  --dataset autodl_single/datasets/medical_qa_50.jsonl \
+  --dataset autodl_single/datasets/english_medical_qa_50.jsonl \
   --output-dir FlexFlow/inference/output/autodl_single/stable_subset \
   --limit 15
 ```
@@ -188,6 +189,12 @@ If your FlexFlow `.out` logs expose accepted or rejected token counts, add them 
 - Latency summary: `latency_ab.csv` and `latency_speedup.png`
 - Acceptance summary: `acceptance_metrics.csv`, `acceptance_by_prompt.json`, and `acceptance_distribution.png`
 - Stability summary: `failure_summary.csv`
+
+## Recommended split by objective
+
+- Use `autodl_single/datasets/english_medical_qa_50.jsonl` for Day 5 and Day 6 mechanism experiments.
+- Keep `autodl_single/datasets/medical_qa_50.jsonl` for Day 4 Chinese stability and failure analysis.
+- If the English full run is still unstable, split it and merge the outputs before analysis.
 
 ## Notes
 
