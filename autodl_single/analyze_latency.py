@@ -83,6 +83,10 @@ def main():
 
     baseline_latencies = [row["latency_seconds"] for row in baseline_rows]
     spec_latencies = [row["latency_seconds"] for row in spec_rows]
+    if not baseline_latencies or not spec_latencies:
+        raise RuntimeError("No successful baseline/spec rows found; cannot analyze latency.")
+    if not speedups:
+        raise RuntimeError("No shared prompt IDs between baseline and spec results; cannot compute speedup.")
 
     figure_path = output_dir / "latency_speedup.png"
     plt.figure(figsize=(8, 5))

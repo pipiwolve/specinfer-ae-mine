@@ -34,6 +34,13 @@ def default_generation_config() -> ff.GenerationConfig:
     return ff.GenerationConfig(do_sample=False, temperature=0.9, topp=0.8, topk=1)
 
 
+def _runtime_limit(config: Dict, key: str, default: int) -> int:
+    server_config = config.get("server", {})
+    if key in server_config:
+        return server_config[key]
+    return config.get(key, default)
+
+
 def build_prompt(messages: List[Dict[str, str]], context: str = "") -> str:
     lines: List[str] = []
     if context:
@@ -85,17 +92,17 @@ class FlexFlowRunner:
             )
             ssm.compile(
                 default_generation_config(),
-                max_requests_per_batch=self.config_dict.get("server", {}).get("max_requests_per_batch", 1),
-                max_seq_length=self.config_dict.get("server", {}).get("max_seq_length", 256),
-                max_tokens_per_batch=self.config_dict.get("server", {}).get("max_tokens_per_batch", 128),
+                max_requests_per_batch=_runtime_limit(self.config_dict, "max_requests_per_batch", 1),
+                max_seq_length=_runtime_limit(self.config_dict, "max_seq_length", 64),
+                max_tokens_per_batch=_runtime_limit(self.config_dict, "max_tokens_per_batch", 64),
             )
             self.ssms.append(ssm)
 
         self.llm.compile(
             default_generation_config(),
-            max_requests_per_batch=self.config_dict.get("server", {}).get("max_requests_per_batch", 1),
-            max_seq_length=self.config_dict.get("server", {}).get("max_seq_length", 256),
-            max_tokens_per_batch=self.config_dict.get("server", {}).get("max_tokens_per_batch", 128),
+            max_requests_per_batch=_runtime_limit(self.config_dict, "max_requests_per_batch", 1),
+            max_seq_length=_runtime_limit(self.config_dict, "max_seq_length", 64),
+            max_tokens_per_batch=_runtime_limit(self.config_dict, "max_tokens_per_batch", 64),
             ssms=self.ssms,
         )
         self.llm.start_server()
@@ -107,7 +114,7 @@ class FlexFlowRunner:
     def generate_text(self, prompt: str, max_length: Optional[int] = None) -> Dict:
         if self.llm is None:
             raise RuntimeError("FlexFlowRunner.start() must be called before generate_text().")
-        generation_max_length = max_length or getattr(self.server_config, "default_max_length", 128)
+        generation_max_length = max_length or _runtime_limit(self.config_dict, "default_max_length", 64)
         started_at = time.perf_counter()
         results = self.llm.generate([prompt], generation_max_length)
         latency_seconds = time.perf_counter() - started_at

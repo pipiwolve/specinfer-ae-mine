@@ -132,7 +132,7 @@ def main():
     ratios = [metric["acceptance_ratio"] for metric in metrics if not math.isnan(metric["acceptance_ratio"])]
     figure_path = output_dir / "acceptance_distribution.png"
     plt.figure(figsize=(8, 5))
-    plt.hist(ratios, bins=10, color="#2f7d64", edgecolor="white")
+    plt.hist(ratios if ratios else [0.0], bins=10, color="#2f7d64", edgecolor="white")
     plt.xlabel("Acceptance ratio")
     plt.ylabel("Count")
     plt.title("SpecInfer acceptance-style metric distribution")

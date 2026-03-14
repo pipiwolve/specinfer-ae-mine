@@ -1,9 +1,9 @@
 {
   "num_gpus": 1,
   "memory_per_gpu": 32000,
-  "zero_copy_memory_per_node": 120000,
-  "num_cpus": 8,
-  "legion_utility_processors": 8,
+  "zero_copy_memory_per_node": 30000,
+  "num_cpus": 4,
+  "legion_utility_processors": 4,
   "data_parallelism_degree": 1,
   "tensor_parallelism_degree": 1,
   "pipeline_parallelism_degree": 1,
@@ -25,9 +25,9 @@
     "port": 8000,
     "cors_origins": ["*"],
     "max_requests_per_batch": 1,
-    "max_seq_length": 256,
-    "max_tokens_per_batch": 128,
-    "default_max_length": 128
+    "max_seq_length": 64,
+    "max_tokens_per_batch": 64,
+    "default_max_length": 64
   },
   "ssms": [
     {
