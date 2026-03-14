@@ -19,6 +19,17 @@ def load_json(path: str) -> Dict:
         return json.load(handle)
 
 
+def _apply_cache_env_overrides(config: Dict) -> Dict:
+    ff_cache_dir = os.environ.get("FF_CACHE_DIR")
+    if not ff_cache_dir:
+        return config
+
+    config["cache_path"] = ff_cache_dir
+    for ssm_config in config.get("ssms", []):
+        ssm_config["cache_path"] = ff_cache_dir
+    return config
+
+
 def default_generation_config() -> ff.GenerationConfig:
     return ff.GenerationConfig(do_sample=False, temperature=0.9, topp=0.8, topk=1)
 
@@ -41,7 +52,7 @@ def build_prompt(messages: List[Dict[str, str]], context: str = "") -> str:
 class FlexFlowRunner:
     def __init__(self, config_path: str):
         self.config_path = config_path
-        self.config_dict = load_json(config_path)
+        self.config_dict = _apply_cache_env_overrides(load_json(config_path))
         self.config = SimpleNamespace(**self.config_dict)
         self.server_config = SimpleNamespace(**self.config_dict.get("server", {}))
         self.mode = self.config_dict.get("server", {}).get(

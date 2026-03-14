@@ -15,7 +15,7 @@
   "inference_debugging": false,
   "fusion": true,
   "llm_model": "huggyllama/llama-7b",
-  "cache_path": "/autodl-tmp/.cache/flexflow",
+  "cache_path": "/root/autodl-tmp/.cache/flexflow",
   "refresh_cache": false,
   "full_precision": false,
   "prompt": "",

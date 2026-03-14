@@ -5,18 +5,19 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 
 export SPECINFER_REPO_ROOT="${REPO_ROOT}"
-export HF_HOME="${HF_HOME:-/autodl-tmp/.cache/huggingface}"
-export FF_CACHE_DIR="${FF_CACHE_DIR:-/autodl-tmp/.cache/flexflow}"
-export TMPDIR="${TMPDIR:-/autodl-tmp/tmp}"
+export AUTODL_TMP_ROOT="${AUTODL_TMP_ROOT:-/root/autodl-tmp}"
+export HF_HOME="${HF_HOME:-${AUTODL_TMP_ROOT}/.cache/huggingface}"
+export FF_CACHE_DIR="${FF_CACHE_DIR:-${AUTODL_TMP_ROOT}/.cache/flexflow}"
+export TMPDIR="${TMPDIR:-${AUTODL_TMP_ROOT}/tmp}"
 export HF_ENDPOINT="${HF_ENDPOINT:-https://hf-mirror.com}"
 export HUGGINGFACE_HUB_CACHE="${HUGGINGFACE_HUB_CACHE:-${HF_HOME}/hub}"
 export TRANSFORMERS_CACHE="${TRANSFORMERS_CACHE:-${HF_HOME}/transformers}"
 export HF_DATASETS_CACHE="${HF_DATASETS_CACHE:-${HF_HOME}/datasets}"
-export XDG_CACHE_HOME="${XDG_CACHE_HOME:-/autodl-tmp/.cache}"
-export TORCH_HOME="${TORCH_HOME:-/autodl-tmp/.cache/torch}"
-export TRITON_CACHE_DIR="${TRITON_CACHE_DIR:-/autodl-tmp/.cache/triton}"
-export PIP_CACHE_DIR="${PIP_CACHE_DIR:-/autodl-tmp/.cache/pip}"
-export CONDA_PKGS_DIRS="${CONDA_PKGS_DIRS:-/autodl-tmp/.cache/conda/pkgs}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-${AUTODL_TMP_ROOT}/.cache}"
+export TORCH_HOME="${TORCH_HOME:-${AUTODL_TMP_ROOT}/.cache/torch}"
+export TRITON_CACHE_DIR="${TRITON_CACHE_DIR:-${AUTODL_TMP_ROOT}/.cache/triton}"
+export PIP_CACHE_DIR="${PIP_CACHE_DIR:-${AUTODL_TMP_ROOT}/.cache/pip}"
+export CONDA_PKGS_DIRS="${CONDA_PKGS_DIRS:-${AUTODL_TMP_ROOT}/.cache/conda/pkgs}"
 
 export FF_HOME="${REPO_ROOT}/FlexFlow"
 export FF_GPU_BACKEND="${FF_GPU_BACKEND:-cuda}"
@@ -49,6 +50,7 @@ fi
 
 cat <<EOF
 SPECINFER_REPO_ROOT=${SPECINFER_REPO_ROOT}
+AUTODL_TMP_ROOT=${AUTODL_TMP_ROOT}
 HF_HOME=${HF_HOME}
 HUGGINGFACE_HUB_CACHE=${HUGGINGFACE_HUB_CACHE}
 TRANSFORMERS_CACHE=${TRANSFORMERS_CACHE}

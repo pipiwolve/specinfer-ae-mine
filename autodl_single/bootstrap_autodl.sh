@@ -11,6 +11,7 @@ PIP_TRUSTED_HOST="${PIP_TRUSTED_HOST:-pypi.tuna.tsinghua.edu.cn}"
 RUSTUP_DIST_SERVER="${RUSTUP_DIST_SERVER:-https://rsproxy.cn}"
 RUSTUP_UPDATE_ROOT="${RUSTUP_UPDATE_ROOT:-https://rsproxy.cn/rustup}"
 CONDA_SSL_VERIFY="${CONDA_SSL_VERIFY:-false}"
+AUTODL_TMP_ROOT="${AUTODL_TMP_ROOT:-/root/autodl-tmp}"
 
 retry() {
   local attempts="$1"
@@ -26,7 +27,11 @@ retry() {
   done
 }
 
-mkdir -p /autodl-tmp/work /autodl-tmp/.cache/huggingface /autodl-tmp/.cache/flexflow /autodl-tmp/tmp
+mkdir -p \
+  "${AUTODL_TMP_ROOT}/work" \
+  "${AUTODL_TMP_ROOT}/.cache/huggingface" \
+  "${AUTODL_TMP_ROOT}/.cache/flexflow" \
+  "${AUTODL_TMP_ROOT}/tmp"
 
 apt-get update
 apt-get install -y build-essential cmake ninja-build pkg-config openmpi-bin libopenmpi-dev git curl wget

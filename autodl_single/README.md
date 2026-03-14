@@ -4,7 +4,7 @@ This directory turns the upstream artifact into a single-node, single-GPU workfl
 
 ## What this kit does
 
-- Keeps all large files on `/autodl-tmp`
+- Keeps all large files on `/root/autodl-tmp`
 - Downloads only `huggyllama/llama-7b` and `JackFram/llama-68m`
 - Provides single-GPU smoke tests for incremental decoding and speculative inference
 - Adds an OpenAI-compatible FastAPI server on top of FlexFlow Serve
@@ -16,7 +16,7 @@ This directory turns the upstream artifact into a single-node, single-GPU workfl
 Clone the repository to:
 
 ```bash
-/autodl-tmp/work/specinfer-ae
+/root/autodl-tmp/work/specinfer-ae
 ```
 
 The scripts assume the repository is on a data disk and that you `source autodl_single/env.sh` before running FlexFlow commands.
@@ -32,7 +32,7 @@ The kit defaults to these mirror-friendly settings:
 - HuggingFace: `https://hf-mirror.com`
 - UCX tarball: `ghfast.top` first, then GitHub origin as fallback
 - Conda SSL verification: disabled by default for proxy-heavy AutoDL environments
-- HuggingFace, Transformers, pip, torch, and conda package caches: all redirected to `/autodl-tmp/.cache`
+- HuggingFace, Transformers, pip, torch, and conda package caches: all redirected to `/root/autodl-tmp/.cache`
 
 Override them if your environment prefers a different mirror:
 
@@ -49,7 +49,7 @@ HF_ENDPOINT=...
 ## Clean setup sequence
 
 ```bash
-cd /autodl-tmp/work/specinfer-ae
+cd /root/autodl-tmp/work/specinfer-ae
 bash autodl_single/bootstrap_autodl.sh
 source autodl_single/env.sh
 bash autodl_single/download_7b_68m.sh
@@ -70,7 +70,7 @@ What `bootstrap_autodl.sh` now does in practice:
 ## Start the OpenAI-compatible API
 
 ```bash
-cd /autodl-tmp/work/specinfer-ae
+cd /root/autodl-tmp/work/specinfer-ae
 source autodl_single/env.sh
 CONFIG_FILE="$PWD/autodl_single/configs/api_specinfer_single_a100.json" \
 uvicorn autodl_single.openai_api:app --host 0.0.0.0 --port 8000
@@ -103,7 +103,7 @@ curl http://127.0.0.1:8000/v1/chat/completions \
 Run baseline incremental decoding:
 
 ```bash
-cd /autodl-tmp/work/specinfer-ae
+cd /root/autodl-tmp/work/specinfer-ae
 source autodl_single/env.sh
 python autodl_single/run_medical_batch.py \
   --mode incr \
@@ -117,7 +117,7 @@ python autodl_single/run_medical_batch.py \
 Run speculative inference:
 
 ```bash
-cd /autodl-tmp/work/specinfer-ae
+cd /root/autodl-tmp/work/specinfer-ae
 source autodl_single/env.sh
 python autodl_single/run_medical_batch.py \
   --mode spec \
