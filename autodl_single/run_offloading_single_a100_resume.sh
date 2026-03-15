@@ -14,6 +14,12 @@ RUN_TAG="${FF_OFFLOAD_RUN_TAG:-default}"
 OUTPUT_DIR="${OUTPUT_ROOT}/${RUN_TAG}"
 mkdir -p "${OUTPUT_DIR}"
 
+python "${REPO_ROOT}/autodl_single/write_manifest.py" \
+  --output-dir "${OUTPUT_DIR}" \
+  --experiment-name "offloading_single_a100" \
+  --repo-root "${REPO_ROOT}" \
+  --extra "run_tag=${RUN_TAG}" "small_llm=${SMALL_LLM}" "large_llm=${LARGE_LLM}" "ssm_model=${SSM_MODEL}" "batch_sizes=${BATCH_SIZES}" "prompt_file=${PROMPT_FILE}"
+
 NCPUS="${FF_OFFLOAD_CPUS:-8}"
 NUTILS="${FF_OFFLOAD_UTILS:-8}"
 NGPUS="${FF_OFFLOAD_GPUS:-1}"

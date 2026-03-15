@@ -21,6 +21,12 @@ BATCH_SIZES="${FF_SERVER_BATCH_SIZES:-1 2 4 8}"
 
 mkdir -p "${OUTPUT_DIR}"
 
+python "${REPO_ROOT}/autodl_single/write_manifest.py" \
+  --output-dir "${OUTPUT_DIR}" \
+  --experiment-name "server_gpu_single_a100" \
+  --repo-root "${REPO_ROOT}" \
+  --extra "run_tag=${RUN_TAG}" "llm_model=${LLM_MODEL}" "ssm_model=${SSM_MODEL}" "batch_sizes=${BATCH_SIZES}"
+
 echo "Run tag: ${RUN_TAG}"
 echo "Output dir: ${OUTPUT_DIR}"
 echo "Cache dir: ${CACHE_DIR}"
