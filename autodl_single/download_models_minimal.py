@@ -13,6 +13,7 @@ def parse_args():
     parser.add_argument("--llm-model", default="huggyllama/llama-7b")
     parser.add_argument("--ssm-model", default="JackFram/llama-68m")
     parser.add_argument("--refresh-cache", action="store_true")
+    parser.add_argument("models", nargs="*")
     return parser.parse_args()
 
 
@@ -79,13 +80,20 @@ def download_model(model_name: str, cache_folder: str, refresh_cache: bool, fall
 def main():
     args = parse_args()
     cache_folder = args.cache_folder or os.environ.get("FF_CACHE_DIR", "~/.cache/flexflow")
+    llm_model = args.llm_model
+    ssm_model = args.ssm_model
 
-    download_model(args.llm_model, cache_folder, args.refresh_cache)
+    if args.models:
+        if len(args.models) != 2:
+            raise SystemExit("Expected exactly two positional models: <llm_model> <ssm_model>")
+        llm_model, ssm_model = args.models
+
+    download_model(llm_model, cache_folder, args.refresh_cache)
     download_model(
-        args.ssm_model,
+        ssm_model,
         cache_folder,
         args.refresh_cache,
-        fallback_model=args.llm_model,
+        fallback_model=llm_model,
     )
 
 
