@@ -33,6 +33,37 @@ def hf_snapshot_dir(model_name: str) -> Path:
     return snapshots[-1]
 
 
+def copy_if_exists(src: Path, dst: Path) -> bool:
+    if not src.exists():
+        return False
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(src, dst)
+    return True
+
+
+def ensure_tokenizer_files(cache_folder: str, model_name: str, filenames: list[str]) -> None:
+    dst_dir = tokenizer_dir(cache_folder, model_name)
+    dst_dir.mkdir(parents=True, exist_ok=True)
+    snapshot_dir = hf_snapshot_dir(model_name)
+    copied_any = False
+    missing = []
+    for filename in filenames:
+        src = snapshot_dir / filename
+        dst = dst_dir / filename
+        if dst.exists():
+            copied_any = True
+            continue
+        if copy_if_exists(src, dst):
+            copied_any = True
+            print(f"Copied tokenizer file from {src} to {dst}")
+        else:
+            missing.append(filename)
+    if not copied_any:
+        raise FileNotFoundError(
+            f"No tokenizer files copied for {model_name}; missing candidates: {missing}"
+        )
+
+
 def ensure_sentencepiece_tokenizer(cache_folder: str, model_name: str) -> None:
     dst_dir = tokenizer_dir(cache_folder, model_name)
     dst_dir.mkdir(parents=True, exist_ok=True)
@@ -44,6 +75,20 @@ def ensure_sentencepiece_tokenizer(cache_folder: str, model_name: str) -> None:
         raise FileNotFoundError(f"Tokenizer model missing in HF snapshot: {src_file}")
     shutil.copy2(src_file, dst_file)
     print(f"Copied sentencepiece tokenizer from {src_file} to {dst_file}")
+
+
+def ensure_opt_tokenizer(cache_folder: str, model_name: str) -> None:
+    ensure_tokenizer_files(
+        cache_folder,
+        model_name,
+        [
+            "vocab.json",
+            "merges.txt",
+            "tokenizer.json",
+            "tokenizer_config.json",
+            "special_tokens_map.json",
+        ],
+    )
 
 
 def ensure_tokenizer_fallback(cache_folder: str, source_model: str, target_model: str) -> None:
@@ -74,6 +119,8 @@ def download_model(model_name: str, cache_folder: str, refresh_cache: bool, fall
         ensure_tokenizer_fallback(cache_folder, fallback_model, model_name)
     if "llama" in model_name.lower():
         ensure_sentencepiece_tokenizer(cache_folder, model_name)
+    if "opt-" in model_name.lower():
+        ensure_opt_tokenizer(cache_folder, model_name)
     llm.download_hf_config()
 
 
