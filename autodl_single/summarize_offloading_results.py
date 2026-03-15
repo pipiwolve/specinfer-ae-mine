@@ -36,9 +36,9 @@ def main() -> None:
     for path in sorted(input_dir.glob("offloading_*_*.out")):
         name = path.stem
         parts = name.split("_")
-        if len(parts) < 4:
+        if len(parts) < 3:
             continue
-        mode = "_".join(parts[:2])
+        mode = "_".join(parts[:-1])
         batch_size = int(parts[-1])
         latencies = parse_latencies(path)
         finished = "----------inference finished--------------" in path.read_text(
