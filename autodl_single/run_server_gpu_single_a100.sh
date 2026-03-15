@@ -4,14 +4,15 @@ set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "${REPO_ROOT}"
 
-OUTPUT_DIR="${REPO_ROOT}/FlexFlow/inference/output/autodl_single/server_gpu_single_a100"
+RUN_TAG="${FF_SERVER_RUN_TAG:-default}"
+OUTPUT_DIR="${REPO_ROOT}/FlexFlow/inference/output/autodl_single/server_gpu_single_a100/${RUN_TAG}"
 CACHE_DIR="${FF_CACHE_DIR:-/root/autodl-tmp/.cache/flexflow}"
 
 NCPUS="${FF_SERVER_CPUS:-8}"
 NUTILS="${FF_SERVER_UTILS:-8}"
 NGPUS="${FF_SERVER_GPUS:-1}"
 FSIZE_MB="${FF_SERVER_FSIZE_MB:-21890}"
-ZSIZE_MB="${FF_SERVER_ZSIZE_MB:-80000}"
+ZSIZE_MB="${FF_SERVER_ZSIZE_MB:-50000}"
 MAX_SEQ_LEN="${FF_SERVER_MAX_SEQ_LEN:-128}"
 MAX_TOKENS="${FF_SERVER_MAX_TOKENS:-128}"
 LLM_MODEL="${FF_LLM_MODEL:-huggyllama/llama-7b}"
@@ -20,6 +21,7 @@ BATCH_SIZES="${FF_SERVER_BATCH_SIZES:-1 2 4 8}"
 
 mkdir -p "${OUTPUT_DIR}"
 
+echo "Run tag: ${RUN_TAG}"
 echo "Output dir: ${OUTPUT_DIR}"
 echo "Cache dir: ${CACHE_DIR}"
 echo "Models: LLM=${LLM_MODEL} SSM=${SSM_MODEL}"
