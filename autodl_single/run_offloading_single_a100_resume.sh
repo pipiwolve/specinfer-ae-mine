@@ -14,12 +14,6 @@ RUN_TAG="${FF_OFFLOAD_RUN_TAG:-default}"
 OUTPUT_DIR="${OUTPUT_ROOT}/${RUN_TAG}"
 mkdir -p "${OUTPUT_DIR}"
 
-python "${REPO_ROOT}/autodl_single/write_manifest.py" \
-  --output-dir "${OUTPUT_DIR}" \
-  --experiment-name "offloading_single_a100" \
-  --repo-root "${REPO_ROOT}" \
-  --extra "run_tag=${RUN_TAG}" "small_llm=${SMALL_LLM}" "large_llm=${LARGE_LLM}" "ssm_model=${SSM_MODEL}" "batch_sizes=${BATCH_SIZES}" "prompt_file=${PROMPT_FILE}"
-
 NCPUS="${FF_OFFLOAD_CPUS:-8}"
 NUTILS="${FF_OFFLOAD_UTILS:-8}"
 NGPUS="${FF_OFFLOAD_GPUS:-1}"
@@ -36,6 +30,12 @@ SMALL_RESERVE_MB="${FF_OFFLOAD_SMALL_RESERVE_MB:-500}"
 LARGE_RESERVE_MB="${FF_OFFLOAD_LARGE_RESERVE_MB:-700}"
 PROMPT_FILE="${FF_OFFLOAD_PROMPT_FILE:-${REPO_ROOT}/FlexFlow/inference/prompt/chatgpt_offloading.json}"
 SEQUENCE_MODE="${FF_OFFLOAD_SEQUENCE_MODE:-1}"
+
+python "${REPO_ROOT}/autodl_single/write_manifest.py" \
+  --output-dir "${OUTPUT_DIR}" \
+  --experiment-name "offloading_single_a100" \
+  --repo-root "${REPO_ROOT}" \
+  --extra "run_tag=${RUN_TAG}" "small_llm=${SMALL_LLM}" "large_llm=${LARGE_LLM}" "ssm_model=${SSM_MODEL}" "batch_sizes=${BATCH_SIZES}" "prompt_file=${PROMPT_FILE}"
 
 if [[ ! -f "${PROMPT_FILE}" ]]; then
   echo "Missing prompt file: ${PROMPT_FILE}" >&2
