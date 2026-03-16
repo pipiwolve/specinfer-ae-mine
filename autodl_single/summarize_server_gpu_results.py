@@ -28,6 +28,28 @@ def mean(values: list[float]) -> float:
     return sum(values) / len(values) if values else 0.0
 
 
+def parse_name(name: str) -> tuple[int, str] | None:
+    if name.startswith("server_small-") and "_batchsize-" in name:
+        batch_size = int(name.split("_batchsize-")[0].split("server_small-")[1])
+    elif name.startswith("single_gpu-"):
+        match = re.match(r"single_gpu-(\d+)_", name)
+        if not match:
+            return None
+        batch_size = int(match.group(1))
+    else:
+        return None
+
+    if "sequence_specinfer" in name:
+        mode = "sequence"
+    elif "tree_specinfer" in name:
+        mode = "tree"
+    elif "incr_dec" in name:
+        mode = "incr"
+    else:
+        return None
+    return batch_size, mode
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -39,17 +61,14 @@ def main() -> None:
     input_dir = Path(args.input_dir)
     rows = []
 
-    for path in sorted(input_dir.glob("server_small-*_batchsize-*.out")):
-        name = path.name
-        batch_size = int(name.split("_batchsize-")[0].split("server_small-")[1])
-        if "sequence_specinfer" in name:
-            mode = "sequence"
-        elif "tree_specinfer" in name:
-            mode = "tree"
-        elif "incr_dec" in name:
-            mode = "incr"
-        else:
+    candidates = sorted(input_dir.glob("server_small-*_batchsize-*.out"))
+    candidates.extend(sorted(input_dir.glob("single_gpu-*.out")))
+
+    for path in candidates:
+        parsed = parse_name(path.name)
+        if parsed is None:
             continue
+        batch_size, mode = parsed
 
         latencies, verified = parse_out(path)
         rows.append(
